@@ -328,11 +328,54 @@
             transform: translateY(-2px);
         }
 
+        /* Home Button Section */
+        .home-button-section {
+            padding: 60px 0;
+            text-align: center;
+            background: var(--primary);
+        }
+
+        .home-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 25px rgba(255, 94, 0, 0.5);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .home-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(255, 94, 0, 0.7);
+        }
+
+        .home-button:hover::before {
+            left: 100%;
+        }
+
         /* Footer */
         footer {
             background: #0d1226;
             padding: 60px 0 30px;
-            margin-top: 60px;
         }
 
         .footer-content {
@@ -399,25 +442,6 @@
         .back-button:hover {
             background: var(--accent);
             transform: translateY(-3px);
-        }
-
-        .home-button {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255, 94, 0, 0.4);
-        }
-
-        .home-button:hover {
-            background: var(--accent-light);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 94, 0, 0.6);
         }
 
         /* Animations */
@@ -496,6 +520,11 @@
             .rule-item {
                 font-size: 1rem;
             }
+            
+            .home-button {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -528,9 +557,6 @@
         <div class="container hero-content">
             <h1>টুর্নামেন্ট <span>নিয়মাবলী</span></h1>
             <p>সবাই টুর্নামেন্টে জয়েন করার আগে অবশ্যই নিয়ম গুলো পড়ে নিবেন। নিচের নিয়ম গুলো অবশ্যই মানতে হবে। </p>
-            <a href="https://jssports.vercel.app" class="home-button" target="_blank">
-                <i class="fas fa-external-link-alt"></i> হোম পেজে যান
-            </a>
         </div>
     </section>
 
@@ -602,7 +628,7 @@
                         <li class="rule-item">আপনার Free Fire আইডি কমপক্ষে 40 লেভেল হতে হবে</li>
                         <li class="rule-item">ম্যাচে অবশ্যই গেমের নাম দিয়ে জয়েন করবেন, UID দিয়ে নয়</li>
                         <li class="rule-item">রুম আইডি ও পাসওয়ার্ড ম্যাচ শুরুর ২০ মিনিট আগে দেওয়া হবে</li>
-                        <li class="rule-item">প্রতি ম্যাচ শেষ হওয়ার ২০–৩০ মিনিটের মধ্যে Winnings prize দেওয়া হবে</li>
+                        <li class="rule-item">প্রতি م্যাচ শেষ হওয়ার ২০–৩০ মিনিটের মধ্যে Winnings prize দেওয়া হবে</li>
                     </ul>
                 </div>
 
@@ -689,6 +715,15 @@
                     <a href="https://wa.me/message/RSERCZRJSTBIB1" class="social-btn" target="_blank">যোগাযোগ</a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Home Button Section -->
+    <section class="home-button-section">
+        <div class="container">
+            <a href="https://jssports.vercel.app" class="home-button" target="_blank">
+                <i class="fas fa-external-link-alt"></i> হোম পেজে যান
+            </a>
         </div>
     </section>
 
