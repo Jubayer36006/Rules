@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js Sports - টুর্নামেন্ট নিয়মাবলী</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        :root {
+            --primary: #1a1f3b;
+            --secondary: #252b4b;
+            --accent: #ff5e00;
+            --accent-light: #ff8c42;
+            --text: #ffffff;
+            --text-secondary: #b8b8b8;
+            --card-bg: #2a3257;
+            --card-border: #3a4270;
+            --freefire-bg: #0d1226;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--freefire-bg) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80') no-repeat center center/cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(26, 31, 59, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 60px;
+            transition: transform 0.3s;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards 0.5s;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+        }
+
+        /* Rules Section */
+        .rules {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.8rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        .section-title span {
+            color: var(--accent);
+        }
+
+        .rules-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .rules-category {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid var(--card-border);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .rules-category:nth-child(1) { animation-delay: 0.2s; }
+        .rules-category:nth-child(2) { animation-delay: 0.4s; }
+        .rules-category:nth-child(3) { animation-delay: 0.6s; }
+        .rules-category:nth-child(4) { animation-delay: 0.8s; }
+        .rules-category:nth-child(5) { animation-delay: 1.0s; }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-right: 15px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: var(--accent-light);
+        }
+
+        .rules-list {
+            list-style: none;
+        }
+
+        .rule-item {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .rule-item::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .important-note {
+            background: rgba(255, 94, 0, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d1226;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            color: var(--text);
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 1px solid var(--card-border);
+            margin-top: 30px;
+        }
+
+        .back-button:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+                text-align: center;
+                padding: 20px 0;
+            }
+            
+            nav.active ul {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .rules-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 130px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .rules-category {
+                padding: 20px;
+            }
+            
+            .category-title {
+                font-size: 1.5rem;
+            }
+            
+            .rule-item {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="https://i.postimg.cc/LXPtt7z0/Picsart-25-08-29-20-10-22-142.png" alt="Js Sports Logo">
+                <div class="logo-text">JS SPORTS</div>
+            </div>
+            <nav id="navbar">
+                <div class="menu-toggle" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul>
+                    <li><a href="index.html">হোম</a></li>
+                    <li><a href="rules.html">নিয়মাবলী</a></li>
+                    <li><a href="#download">ডাউনলোড</a></li>
+                    <li><a href="#contact">যোগাযোগ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>টুর্নামেন্ট <span>নিয়মাবলী</span></h1>
+            <p>সবাই টুর্নামেন্টে জয়েন করার আগে অবশ্যই নিয়ম গুলো পড়ে নিবেন। নিচের নিয়ম গুলো অবশ্যই মানতে হবে। </p>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section class="rules">
+        <div class="container">
+            <div class="rules-container">
+                <!-- নিষিদ্ধ বিষয় -->
+                <div class="rules-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <h3 class="category-title">নিষিদ্ধ বিষয়</h3>
+                    </div>
+                    <ul class="rules-list">
+                        <li class="rule-item">কোনো ধরনের গাড়ি ব্যবহার করে কিল করা যাবে না</li>
+                        <li class="rule-item">Female চরিত্র দিয়ে খেলা যাবে না</li>
+                        <li class="rule-item">PC প্লেয়ারদের খেলা সম্পূর্ণ নিষিদ্ধ</li>
+                        <li class="rule-item">Full Map Battle বা Heal Battle করলে কোনো রিওয়ার্ড দেওয়া হবে না</li>
+                        <li class="rule-item">হ্যাকিং বা টিমিং ধরা পড়লে আপনার আইডি স্থায়ীভাবে ব্যান হবে</li>
+                        <li class="rule-item">বাইরের (Unregistered) প্লেয়ারকে রুমে ঢোকানো যাবে না</li>
+                    </ul>
+                </div>
+
+                <!-- রেকর্ডিং নিয়ম -->
+                <div class="rules-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="category-title">রেকর্ডিং নিয়ম</h3>
+                    </div>
+                    <ul class="rules-list">
+                        <li class="rule-item">গেম ওপেন করার সাথে সাথে Screen Recording চালু রাখতে হবে</li>
+                        <li class="rule-item">Plane এ ওঠার পর রেকর্ডিং বন্ধ করতে পারবেন</li>
+                        <li class="rule-item">যদি আপনার গেমপ্লে সন্দেহজনক হয়, তখন এডমিন ভিডিও চাইতে পারে</li>
+                        <li class="rule-item">ভিডিও না দিলে কোনো পুরস্কার পাবেন না</li>
+                        <li class="rule-item">72 ঘন্টার মধ্যে ভিডিও চাওয়া না হলে মুছে দিতে পারবেন</li>
+                    </ul>
+                </div>
+
+                <!-- টাকা ও Withdraw নিয়ম -->
+                <div class="rules-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3 class="category-title">টাকা ও Withdraw নিয়ম</h3>
+                    </div>
+                    <ul class="rules-list">
+                        <li class="rule-item">কেউ ৩০০ টাকার বেশি একসাথে Withdraw দিতে পারবেন না</li>
+                        <li class="rule-item">Withdraw প্রতিদিন রাত্রে ১০ টা থেকে ১২ টা পর্যন্ত এপ্রোভ করা হবে। </li>
+                        <li class="rule-item">রুম থেকে কিক খেলে রেকর্ডিং ছাড়া টাকা ফেরত পাবেন না</li>
+                        <li class="rule-item">ম্যাচ বাতিল হলে ১ ঘণ্টার মধ্যে টাকা রিফান্ড হবে</li>
+                        <li class="rule-item">সময়মতো জয়েন করতে না পারলে টাকা ফেরত দেওয়া হবে না</li>
+                    </ul>
+                </div>
+
+                <!-- ম্যাচ নিয়ম -->
+                <div class="rules-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="category-title">ম্যাচ নিয়ম</h3>
+                    </div>
+                    <ul class="rules-list">
+                        <li class="rule-item">আপনার Free Fire আইডি কমপক্ষে 40 লেভেল হতে হবে</li>
+                        <li class="rule-item">ম্যাচে অবশ্যই গেমের নাম দিয়ে জয়েন করবেন, UID দিয়ে নয়</li>
+                        <li class="rule-item">রুম আইডি ও পাসওয়ার্ড ম্যাচ শুরুর ২০ মিনিট আগে দেওয়া হবে</li>
+                        <li class="rule-item">প্রতি ম্যাচ শেষ হওয়ার ২০–৩০ মিনিটের মধ্যে Winnings prize দেওয়া হবে</li>
+                    </ul>
+                </div>
+
+                <!-- গুরুত্বপূর্ণ বিষয় -->
+                <div class="rules-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="category-title">গুরুত্বপূর্ণ বিষয়</h3>
+                    </div>
+                    <div class="important-note">
+                        <p>এডমিনের যেকোনো সিদ্ধান্তই চূড়ান্ত এবং তা মেনে চলতে হবে। নিয়ম ভঙ্গ করলে আপনার অ্যাকাউন্ট স্থায়ীভাবে নিষিদ্ধ হতে পারে।</p>
+                    </div>
+                    <ul class="rules-list">
+                        <li class="rule-item">সকল নিয়ম কঠোরভাবে মেনে চলুন</li>
+                        <li class="rule-item">কোনো সমস্যা হলে সাথে সাথে এডমিনকে জানান</li>
+                        <li class="rule-item">টুর্নামেন্ট শুরুর আগে সব নিয়ম পড়ে নিন</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> হোম পেজে ফিরে যান
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">JS SPORTS</div>
+                    <p>ফ্রি ফায়ার ভক্তদের জন্য চূড়ান্ত গেমিং টুর্নামেন্ট প্ল্যাটফর্ম। প্রতিযোগিতা করুন, জিতুন এবং নগদ পুরস্কার উপার্জন করুন।</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>দ্রুত লিংক</h3>
+                    <ul>
+                        <li><a href="index.html">হোম</a></li>
+                        <li><a href="rules.html">নিয়মাবলী</a></li>
+                        <li><a href="#download">ডাউনলোড</a></li>
+                        <li><a href="#contact">যোগাযোগ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3>সহায়তা</h3>
+                    <ul>
+                        <li><a href="#">সচাল প্রশ্ন</a></li>
+                        <li><a href="#">গোপনীয়তা নীতি</a></li>
+                        <li><a href="#">সেবার শর্তাবলী</a></li>
+                        <li><a href="#">যোগাযোগ করুন</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; ২০২৫ Js Sports. সকল অধিকার সংরক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            document.getElementById('navbar').classList.toggle('active');
+        });
+
+        // Animation on scroll
+        function checkScroll() {
+            const elements = document.querySelectorAll('.rules-category');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(elementPosition < screenPosition) {
+                    element.style.animationPlayState = 'running';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
